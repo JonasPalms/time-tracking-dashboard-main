@@ -30,7 +30,6 @@ function selectText(selector) {
 
 }
 
-
 function updateUI(event) {
 
     // reset arrays if not empty 
