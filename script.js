@@ -5,12 +5,7 @@ const monthly = document.getElementById("monthly");
 
 
 // current time displays
-const currentWork = document.getElementById("work-current");
-const currentPlay = document.getElementById("play-current");
-const currentStudy = document.getElementById("study-current");
-const currentExercise = document.getElementById("exercise-current");
-const currentSocial = document.getElementById("social-current");
-const currentSelfCare = document.getElementById("self-care-current");
+
 
 // previous time displays
 const previousWork = document.getElementById("work-previous");
@@ -22,6 +17,8 @@ const previousSelfCare = document.getElementById("self-care-previous");
 
 // nu jeg tænker over det kunne jeg også bare have lavet et array af alle elementerne
 
+const currentOutputs = document.querySelectorAll("#time__current");
+console.log(currentOutputs);
 
 //event listeners
 daily.addEventListener("click", getData);
@@ -34,32 +31,39 @@ monthly.addEventListener("click", getData);
 // use literal strings
 
 
+let previousTimes = [];
+let currentTimes = [];
 
 function getData(event) {
 
-    let previousTimes = [];
-    let currentTimes = [];
     const selector = event.target.id;
 
+    if (previousTimes || currentTimes) {
+        previousTimes = [], currentTimes = [];
+    }
 
-    console.log(selector);
     fetch("./data.json")
         .then(response => response.json())
         .then(data => {
 
             for (let i = 0; i < 6; i++) {
                 currentTimes.push(data[i].timeframes[selector].current);
-                previousTimes.push(data[i].timeframes[selector].previous)
+                previousTimes.push(data[i].timeframes[selector].previous);
             }
-            console.log(previousTimes, currentTimes);
-        });
 
-    updateIU(selector, previousTimes, currentTimes);
+        })
+        .catch(error => console.log(error));
+
+
+    updateIU(previousTimes, currentTimes);
 }
 
-function updateIU(selector, previous, current) {
+function updateIU(previousTimes, currentTimes) {
 
-    if (selector === "daily") {
+    console.log(previousTimes, currentTimes);
 
-    }
+    currentOutputs.forEach(output => {
+        output.innerText = `${currentTimes[0]}hrs`;
+    })
 }
+
