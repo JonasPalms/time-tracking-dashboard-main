@@ -21,7 +21,7 @@ let currentTimes = [];
 
 // async func to fetch json data
 async function loadData() {
-    const response = await fetch('/data.json');
+    const response = await fetch('./data.json');
     const fetchedData = await response.json();
     data = fetchedData;
 }
